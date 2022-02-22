@@ -1,0 +1,28 @@
+{% extends 'user/base.html' %}
+
+
+{% block title %}Instagram Wall{% endblock %}
+
+{% block content %}
+
+<div style="text-align: center;">
+    {% if not link %}
+    <figure>
+        <img src="https://http.cat/{{status_code}}" alt="">
+    </figure>
+    <div class="card large" ><div class="section">
+        <h1><span class="icon-alert"></span> An Error Has Occurred <small>{{error}}<br>Try one more time.</small></h1>
+    </div></div>
+
+    {% elif link %}
+    <figure>
+        <img src="{{ url_for('static', filename='images/instagram_link.gif') }}" alt="" width="100%">
+    </figure>
+    <div class="card large"><div class="section">
+        <h1>Story Uploaded</h1>
+        <p>Link: <a href="{{ link }}" target="_blank">Click here</a></p>
+    </div></div>
+    {% endif %}
+</div>
+{% endblock %}
+

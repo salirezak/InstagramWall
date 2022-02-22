@@ -1,0 +1,66 @@
+{% extends 'admin/base_dashboard.html' %}
+
+{% block title %} IW Errors Log {% endblock %}
+
+{% block content %}
+    <h1>Errors Log</h1>
+
+    <table class="hoverable" style="max-height: fit-content;"   >
+        <thead class="">
+            <tr>
+                <th style="text-align: center; max-width:1rem;"></th>
+
+                <th style="text-align: center;max-width:4rem;">Id</th>
+                <th style="text-align: center;max-width:10rem;">TimeStamp</th>
+                <th style="max-width:15rem;">Url</th>
+                <th style="text-align: center;max-width:3rem;">Code</th>
+                <th style="text-align: center;max-width:4rem;">StoryId</th>
+                <th style="max-width: 100%;">Text</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for error in errors_table.items %}
+            <tr>
+                {% if loop.index == 1 %}
+                <td style="background:initial;text-align: center; max-width:1rem;border: solid thin var(--table-border-color);border-bottom: none;border-left: none;border-top: none;">{{ loop.index }}</td>
+                {% else %}
+                <td style="background:initial;text-align: center; max-width:1rem;border: solid thin var(--table-border-color);border-bottom: none;border-left: none;">{{ loop.index }}</td>
+                {% endif %}
+
+                <td style="text-align: center;max-width:4rem;" data-label="Id">{{ error.id }}</td>
+                <td style="text-align: center;max-width:10rem;" data-label="TimeStamp">{{ error.timestamp }}</td>
+                <td style="max-width:15rem;" data-label="Url">{{ error.url.replace('https://www.instagram.com', '') }}</td>
+                <td style="text-align: center;max-width:3rem;" data-label="Code">{{ error.status_code }}</td>
+                <td style="text-align: center;max-width:3rem;" data-label="StoryId">{{ error.story_id }}</td>
+                <td style="max-width: 100rem;max-height: 3.5rem;overflow-y: auto;padding-top: 0;" data-label="Text"><p>{{ error.text }}</p></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        <tfoot style="min-width: 100%">
+            <tr>
+                <td style="padding: 0;max-width: fit-content;border: none;">
+                    <div style="font-size: 0;">
+                        <a {% if errors_table.page == 1 %} disabled {% else %} href="{{ url_for('admin.errors_log', page=errors_table.prev_num) }}"{% endif%} {% if errors_table.page == 1 %}disabled{% endif %} class="button small" style="margin: 0; font-size: 1rem;"> &laquo; </a>
+                        {% for page_num in errors_table.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+                            {% if page_num %}
+                                {% if errors_table.page == page_num %}
+                                    <a href="{{ url_for('admin.errors_log', page=page_num) }}" class="button inverse small" style="margin: 0;font-size: 1rem;"> {{ page_num }} </a>
+                                {% else %}
+                                    <a href="{{ url_for('admin.errors_log', page=page_num) }}" class="button small" style="margin: 0;font-size: 1rem;"> {{ page_num }} </a>
+                                {% endif %}
+                            {% else %}
+                                ...
+                            {% endif %}
+                        {% endfor %}
+                        <a {% if errors_table.page == errors_table.pages %} disabled {% else %} href="{{ url_for('admin.errors_log', page=errors_table.next_num) }}"{% endif%} class="button small" style="margin: 0;font-size: 1rem;"> &raquo; </a>
+                    </div>
+                </td>
+                <td style="padding: 0 0 0 1rem;align-self:center;border: none;">Showing page {{ errors_table.page }} of {{ errors_table.pages }}</td>
+            </tr>
+
+        </tfoot>
+    </table>
+
+
+{% endblock %}
+{% block javascript %}{% endblock %}

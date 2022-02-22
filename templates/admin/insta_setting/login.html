@@ -1,0 +1,34 @@
+{% extends 'admin/insta_status.html' %}
+
+{% block title %} IW Insta Setting {% endblock %}
+
+{% block content2 %}
+    <div class="row">
+        <div class="col-md">
+            <h1>Instagram Login</h1>
+
+            <form action="{{ url_for('admin.insta_setting') }}" method="post">
+                {% with messages = get_flashed_messages(True) %}
+                    {% if messages %}
+                        <ul class="flashes">
+                            {% for message in messages %}
+                                <li><mark class="{{ message[0] }}">{{ message[1] }}</mark></li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                {% endwith %}
+                {{ forms[0].hidden_tag() }}
+                {{ forms[0].username.label }}
+                {{ forms[0].username() }}<br>
+                {{ forms[0].password.label }}
+                {{ forms[0].password() }}<br><br>
+                {{ forms[0].submit() }} <a href="{{ url_for('admin.del_insta')}}" class="button">Delete Browser</a> <a href="{{ url_for('admin.insta_cookie')}}" class="button">Insta Cookie</a>
+            </form>
+        </div>
+
+        <div class="col">
+            <figure><img src="{{ screen }}" alt="" style="width: 400px;object-fit: none;height: 600px;object-position: top;"></figure>
+        </div>
+    </div>
+{% endblock %}
+{% block javascript %}{% endblock %}

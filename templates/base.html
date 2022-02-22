@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html dir="{% block dir %}{% endblock %}" lang="{% block lang %}{% endblock %}">
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+          @font-face {
+              font-family: vazir;
+              src: url("{{ url_for('static', filename='font/Vazir.eot')}}");
+              src: url("{{ url_for('static', filename='font/Vazir.eot?#iefix')}}") format('embedded-opentype'),
+              url("{{ url_for('static', filename='font/Vazir.woff')}}") format('woff'),
+              url("{{ url_for('static', filename='font/Vazir.truetype')}}") format('truetype');
+              font-weight: normal;
+          }
+          *{font-family:vazir;}
+        </style>
+
+        {% block head %}{% endblock %}
+        <title>{% block title %}{% endblock %}</title>
+
+
+
+    </head>
+
+    <body>
+      {% block body %}{% endblock %}
+      {% block javascript %}{% endblock %}
+    </body>
+
+</html>

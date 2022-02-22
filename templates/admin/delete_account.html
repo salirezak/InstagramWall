@@ -1,0 +1,47 @@
+{% extends 'admin/base_dashboard.html' %}
+
+{% block title %} IW Delete Account {% endblock %}
+
+{% block content %}
+    <h1>Delete Account</h1>
+    {% if not stage %}
+        <form action="{{ url_for('admin.delete_account') }}" method="post">
+            {% with messages = get_flashed_messages(True) %}
+                {% if messages %}
+                    <ul class="flashes">
+                        {% for message in messages %}
+                            <li><mark class="{{ message[0] }}">{{ message[1] }}</mark></li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            {% endwith %}
+            {{ forms[0].hidden_tag() }}
+            {{ forms[0].password.label }}
+            {{ forms[0].password() }}<br>
+            {{ forms[0].confirm_password.label }}
+            {{ forms[0].confirm_password() }}<br>
+            {{ forms[0].submit() }}
+        </form>
+    {% elif stage == 'confirm' %}
+        <form action="{{ url_for('admin.delete_account') }}" method="post">
+            <p>Are you sure?</p>
+            {% with messages = get_flashed_messages(True) %}
+                {% if messages %}
+                    <ul class="flashes">
+                        {% for message in messages %}
+                            <li><mark class="{{ message[0] }}">{{ message[1] }}</mark></li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            {% endwith %}
+            {{ forms[1].hidden_tag() }}
+            {{ forms[1].username.label }}
+            {{ forms[1].username() }}<br>
+            {{ forms[1].submit() }}
+        </form>
+    {% elif stage == 'error' %}
+        <p>You are the only root admin. First create another one.</p>
+    {% endif %}
+
+{% endblock %}
+{% block javascript %}{% endblock %}

@@ -1,0 +1,30 @@
+{% extends 'user/base.html' %}
+
+
+{% block title %}Instagram Wall{% endblock %}
+
+{% block content %}
+<figure>
+    <img src="{{ url_for('static', filename='images/instagram-wall-0.jpg') }}" alt="">
+</figure>
+<form action="{{url_for('user.index')}}" method="post">
+
+    <span style="margin: 0.5rem;"> Story Text: </span>
+
+    {% with messages = get_flashed_messages(True) %}
+    {% if messages %}
+        <ul class="flashes">
+            {% for message in messages %}
+                <li><mark class="{{ message[0] }}">{{ message[1] }}</mark></li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    {% endwith %}
+
+    {{ form.hidden_tag() }}
+    {{ form.text(style='width: 80%;box-sizing: border-box;margin: 1rem auto;display: block; resize:none', rows='3', placeholder='') }}
+    {{ form.submit() }}
+
+</form>
+{% endblock %}
+

@@ -1,0 +1,26 @@
+kind: ExternalService
+name: instagram-wall
+spec:
+  image: instagram-wall:0.1
+
+  port: 80
+
+  env:
+    - name: SECRET_KEY
+      value: ${SECRET_KEY}
+    - name: SQLALCHEMY_DATABASE_URI
+      value: mysql+pymysql://root:${DB_PASSWORD}@db/instawall
+    - name: MAIL_USERNAME
+      value: ${MAIL_USERNAME}
+    - name: MAIL_PASSWORD
+      value: ${MAIL_PASSWORD}
+    - name: MAIL_DEFAULT_SENDER
+      value: ${MAIL_USERNAME}
+
+  static_path : /static/
+
+  domains:
+     - name: instagram-wall.ir
+     - name: www.instagram-wall.ir
+
+  allow_http: false

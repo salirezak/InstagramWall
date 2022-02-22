@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+
+{% block dir %}rlt{% endblock %}
+{% block lang %}fa{% endblock %}
+
+{% block title %}{% endblock %}
+
+{% block head %}
+    <link rel="stylesheet" href="https://cdn.rawgit.com/Chalarangelo/mini.css/v3.0.1/dist/mini-default.min.css">
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-sm"></div>
+        <div class="col-md">
+            <br><br><br><br>
+            {% block content %}
+            {% endblock %}
+            <footer style="text-align: center;">
+                <a href="mailto:salirezakarami@gmail.com" target="_blank"><img src="{{ url_for('static', filename='images/gmail.png') }}" alt="Gmail" width="40px"></a>
+                <a href="https://github.com/salirezak/InstagramWall" target="_blank"><img src="{{ url_for('static', filename='images/github.png') }}" alt="Github" width="40px"></a>
+            </footer>
+        </div>
+        <div class="col-sm"></div>
+    </div>
+
+    <style>
+        body{
+                background: {{ bg_color }};
+            }
+            form{
+                margin-bottom: 0;
+            }
+            footer{
+                margin: calc(2 * var(--universal-padding)) var(--universal-padding);
+                padding: 5px 0;
+                margin-top: 0;
+            }
+            .card.large{
+                display: block;
+                box-sizing: border-box;
+                max-width: 100%;
+                width: auto;
+                margin-bottom: 0;
+            }
+            .section{
+                background: var(--form-back-color);
+            }
+            a > img{
+                margin: 0 3px;
+            }
+    </style>
+{% endblock %}
+
+{% block javascript %}{% endblock %}

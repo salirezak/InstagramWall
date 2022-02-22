@@ -1,0 +1,69 @@
+{% extends 'admin/base_dashboard.html' %}
+
+{% block title %} IW Stories Log {% endblock %}
+
+{% block content %}
+    <h1>Stories Log</h1>
+
+    <table class="hoverable" style="max-height: fit-content;">
+        <thead class="">
+            <tr>
+                <th style="text-align: center; max-width:1rem;"></th>
+
+                <th style="text-align: center;max-width:4rem;">Id</th>
+                <th style="text-align: center;max-width:10rem;">TimeStamp</th>
+                <th style="text-align: center;max-width:5rem;">Stage</th>
+                <th style="text-align: center;max-width:4rem;">ErrorId</th>
+                <th>Text</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for story in stories_table.items %}
+                {% if  story.stage_name() == 'failed' %}
+            <tr style="background:#ff002359">
+                {% elif  story.stage_name() == 'uploaded' %}
+            <tr style="background:#00910078">
+                {% else %}
+            <tr>
+                {% endif %}
+
+                {% if loop.index == 1 %}
+                <td style="background:initial;text-align: center; max-width:1rem;border: solid thin var(--table-border-color);border-bottom: none;border-left: none;border-top: none;">{{ loop.index }}</td>
+                {% else %}
+                <td style="background:initial;text-align: center; max-width:1rem;border: solid thin var(--table-border-color);border-bottom: none;border-left: none;">{{ loop.index }}</td>
+                {% endif %}
+
+                <td style="background:initial; text-align: center; max-width:4rem;" data-label="Id">{{ story.id }}</td>
+                <td style="background:initial; text-align: center; max-width:10rem;" data-label="TimeStamp">{{ story.timestamp }}</td>
+                <td style="background:initial; text-align: center; max-width:5rem;" data-label="Stage">{{ story.stage_name() }}</td>
+                <td style="background:initial; text-align: center; max-width:4rem;" data-label="ErrorId">{{ story.error_id }}</td>
+                <td style="background:initial" data-label="Text">{{ story.text }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        <tfoot style="min-width: 100%">
+            <tr>
+                <td style="padding: 0;max-width: fit-content;border: none;">
+                    <div style="font-size: 0;">
+                        <a {% if stories_table.page == 1 %} disabled {% else %} href="{{ url_for('admin.stories_log', page=stories_table.prev_num) }}"{% endif%} {% if stories_table.page == 1 %}disabled{% endif %} class="button small" style="margin: 0; font-size: 1rem;"> &laquo; </a>
+                        {% for page_num in stories_table.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+                            {% if page_num %}
+                                {% if stories_table.page == page_num %}
+                                    <a href="{{ url_for('admin.stories_log', page=page_num) }}" class="button inverse small" style="margin: 0;font-size: 1rem;"> {{ page_num }} </a>
+                                {% else %}
+                                    <a href="{{ url_for('admin.stories_log', page=page_num) }}" class="button small" style="margin: 0;font-size: 1rem;"> {{ page_num }} </a>
+                                {% endif %}
+                            {% else %}
+                                ...
+                            {% endif %}
+                        {% endfor %}
+                        <a {% if stories_table.page == stories_table.pages %} disabled {% else %} href="{{ url_for('admin.stories_log', page=stories_table.next_num) }}"{% endif%} class="button small" style="margin: 0;font-size: 1rem;"> &raquo; </a>
+                    </div>
+                </td>
+                <td style="padding: 0 0 0 1rem;align-self:center;border: none;">Showing page {{ stories_table.page }} of {{ stories_table.pages }}</td>
+            </tr>
+
+        </tfoot>
+    </table>
+{% endblock %}
+{% block javascript %}{% endblock %}

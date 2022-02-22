@@ -1,0 +1,34 @@
+{% extends 'admin/base_dashboard.html' %}
+
+{% block title %} IW Insta Setting {% endblock %}
+
+{% block content %}
+    <style>
+        :root{
+            --card-back-color: rgb(75, 181, 67);
+            --card-border-color: #347b35;
+        }
+    </style>
+
+    <div class="row"> <div class="card fluid {{ instagram_status['color'] }}" style="width: 100%;">
+        <div class="section"><h4 style="margin-top:0;margin-bottom:0">Instagram Status</h4></div>
+        <div class="section double-padded"> <div class="row">
+            <div class="col" style="margin-right: auto;">
+                <div class="row"><span>Country:</span></div>
+                <div class="row"><h3 style="margin-top:0; margin-bottom: 0;">{{instagram_status['country']}}</h3></div>
+            </div>
+            <div class="col" style="margin-right: auto;">
+                <div class="row"><span>Username:</span></div>
+                <div class="row"><h3 style="margin-top:0; margin-bottom: 0;">{{instagram_status['username']}}</h3></div>
+            </div>
+            <div class="col" style="margin-right: auto;">
+                <div class="row"><span>UserId:</span></div>
+                <div class="row"><h3 style="margin-top:0; margin-bottom: 0;">{{instagram_status['userid']}}</h3></div>
+            </div>
+        </div></div>
+    </div></div>
+
+    {% block content2 %}{% endblock %}
+
+{% endblock %}
+{% block javascript %}{% endblock %}

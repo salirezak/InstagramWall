@@ -1,0 +1,66 @@
+{% extends 'admin/base.html' %}
+
+
+
+{% block title %}{% endblock %}
+
+{% block body %}
+    <header class="sticky">
+        <a href="{{ url_for('admin.dashboard') }}" class="logo">Dashboard</a>
+        {% if admin[1] in ['root', 'admin'] %}
+            <a href="{{ url_for('admin.insta_setting') }}" class="button">Insta Setting</a>
+            <a href="{{ url_for('admin.stories_log') }}" class="button">Stories Log</a>
+            <a href="{{ url_for('admin.errors_log') }}" class="button">Errors Log</a>
+        {% endif %}
+        {% if admin[1] in ['root'] %}
+            <a href="{{ url_for('admin.register_admin') }}" class="button">Register Admin</a>
+            <a href="{{ url_for('admin.edit_admins') }}" class="button">Edit Admins</a>
+        {% endif %}
+        <a href="{{ url_for('admin.logout') }}" class="button"><span class="icon-lock"></span>Logout</a>
+        <label  for="drawer" class="button persistent" ><span class="icon-user"></span>{{admin[0]}}<small style="text-transform: capitalize;"> {{admin[1]}}</small></label>
+    </header>
+
+    <input type="checkbox" id="drawer" class="drawer persistent" st>
+    <div class="demo" style="height: fit-content; padding: 1rem 3rem 1rem 1rem; margin:0.5rem;  width:fit-content ;">
+        <label for="drawer" class="" style="display:contents; cursor: pointer;">
+            <mark>
+                <span class="icon-user inverse"></span>
+                <strong>{{admin[0]}}</strong>
+                <small style="text-transform: capitalize;"> {{admin[1]}}</small>
+            </mark>
+        </label><br><br>
+
+        <a href="{{ url_for('admin.change_password') }}">Change Password</a><br>
+        <a href="{{ url_for('admin.delete_account') }}">Delete Account</a><br>
+    </div>
+
+    <br>
+
+{% block content %} {% endblock %}
+
+{% endblock %}
+{% block javascript %}{% endblock %}
+
+
+position: -webkit-sticky;
+position: sticky;
+z-index: 1101;
+top: 0;
+
+position: -webkit-sticky;
+position: sticky;
+z-index: 1101;
+top: 0;
+}
+
+height: 3.1875rem;
+background: var(--header-back-color);
+color: var(--header-fore-color);
+border-bottom: .0625rem solid var(--header-border-color);
+padding: calc(var(--universal-padding) / 4) 0;
+white-space: nowrap;
+overflow-x: auto;
+overflow-y: hidden;
+
+
+

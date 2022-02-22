@@ -1,0 +1,51 @@
+{% extends 'admin/insta_status.html' %}
+
+{% block title %} IW Dashboard {% endblock %}
+
+{% block content2 %}
+     <h1>10 Last Failed Stories</h1>
+    <table class="hoverable" style="max-height: fit-content;"   >
+        <thead class="">
+            <tr>
+                <th style="text-align: center; max-width:1rem;"></th>
+
+                <th style="text-align: center;max-width:4rem;">StoryId</th>
+                <th style="text-align: center;max-width:10rem;">Story TimeStamp</th>
+                <th>Story Text</th>
+
+                <th style="max-width:1rem; background: #f8f8f8; border: solid thin var(--table-border-color);border-bottom: none;border-top: none;"></th>
+
+                <th style="text-align: center;max-width:4rem;">ErrorId</th>
+                <th style="text-align: center;max-width:10rem;">Error TimeStamp</th>
+                <th style="max-width:20rem;">Url</th>
+                <th style="text-align: center;max-width:3rem;">Code</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for error, story in tables %}
+            <tr>
+                {% if loop.index == 1 %}
+                <td style="background:initial;text-align: center; max-width:1rem;border: solid thin var(--table-border-color);border-bottom: none;border-left: none;border-top: none;">{{ loop.index }}</td>
+                {% else %}
+                <td style="background:initial;text-align: center; max-width:1rem;border: solid thin var(--table-border-color);border-bottom: none;border-left: none;">{{ loop.index }}</td>
+                {% endif %}
+
+                <td style="text-align: center; max-width:4rem;" data-label="StoryId">{{ story.id }}</td>
+                <td style="text-align: center; max-width:10rem;" data-label="Story TimeStamp">{{ story.timestamp }}</td>
+                <td data-label="Story Text">{{ story.text }}</td>
+
+                <td style="max-width:1rem; background: #f8f8f8; border: solid thin var(--table-border-color);border-bottom: none;border-top: none;"></td>
+
+                <td style="text-align: center; max-width:4rem;" data-label="ErrorId">{{ error.id }}</td>
+                <td style="text-align: center;max-width:10rem;" data-label="Error TimeStamp">{{ error.timestamp }}</td>
+                <td style="max-width:20rem;" data-label="Url">{{ error.url.replace('https://www.instagram.com', '') }}</td>
+                <td style="text-align: center;max-width:3rem;" data-label="Code">{{ error.status_code }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+
+
+{% endblock %}
+{% block javascript %}{% endblock %}

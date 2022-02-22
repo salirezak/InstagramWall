@@ -1,0 +1,65 @@
+{% extends 'admin/base_dashboard.html' %}
+
+{% block title %} IW Edit Admins {% endblock %}
+
+{% block content %}
+    <h1>Edit Admins</h1>
+
+    <form action="{{ url_for('admin.edit_admins') }}" method="post">
+        {% with messages = get_flashed_messages(True) %}
+            {% if messages %}
+                <ul class="flashes">
+                    {% for message in messages %}
+                        <li><mark class="{{ message[0] }}">{{ message[1] }}</mark></li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+        {{ form.hidden_tag() }}
+        {{ form.admins_list.label }}
+        {{ form.admins_list() }}<br>
+        {{ form.action.label }}
+        {{ form.action() }}<br><br>
+        {{ form.current_password.label }} {{ form.current_password() }} {{ form.submit() }}
+    </form>
+    <br>
+    <h1>Admins List</h1>
+
+    <table class="hoverable">
+        <thead class="">
+            <tr>
+                <th style="text-align: center; max-width:1rem;"></th>
+
+                <th style="text-align: center;max-width: 4rem;">Id</th>
+                <th>Name</th>
+                <th>Role</th>
+                <th>Timestamp</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for admin in admins_table %}
+                {% if  admin.role_name() == 'banned' %}
+            <tr style="background:#ff002359">
+                {% elif  admin.role_name() == 'root' %}
+            <tr style="background:#00910078">
+                {% else %}
+            <tr>
+                {% endif %}
+
+                {% if loop.index == 1 %}
+                <td style="background:initial;text-align: center; max-width:1rem;border: solid thin var(--table-border-color);border-bottom: none;border-left: none;border-top: none;">{{ loop.index }}</td>
+                {% else %}
+                <td style="background:initial;text-align: center; max-width:1rem;border: solid thin var(--table-border-color);border-bottom: none;border-left: none;">{{ loop.index }}</td>
+                {% endif %}
+
+                <td style="background:initial;text-align: center;max-width: 4rem;" data-label="">{{ admin.id }}</td>
+                <td style="background:initial;" data-label="Name">{{ admin.username }}</td>
+                <td style="background:initial;" data-label="Role">{{ admin.role_name() }}</td>
+                <td style="background:initial;" data-label="Timestamp">{{ admin.timestamp }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}
+{% block javascript %}{% endblock %}

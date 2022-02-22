@@ -1,0 +1,103 @@
+{% extends 'admin/base_dashboard.html' %}
+
+{% block title %} IW Insta Setting {% endblock %}
+
+{% block content %}
+    <style>
+        :root{
+            --card-back-color: rgb(75, 181, 67);
+            --card-border-color: #347b35;
+        }
+    </style>
+
+    <div class="row"> <div class="card fluid {{ instagram_status['color'] }}" style="width: 100%;">
+        <div class="section"><h4 style="margin-top:0;margin-bottom:0">Instagram Status</h4></div>
+        <div class="section double-padded"> <div class="row">
+            <div class="col" style="margin-right: auto;">
+                <div class="row"><span>Country:</span></div>
+                <div class="row"><h3 style="margin-top:0; margin-bottom: 0;">{{instagram_status['country']}}</h3></div>
+            </div>
+            <div class="col" style="margin-right: auto;">
+                <div class="row"><span>Username:</span></div>
+                <div class="row"><h3 style="margin-top:0; margin-bottom: 0;">{{instagram_status['username']}}</h3></div>
+            </div>
+            <div class="col" style="margin-right: auto;">
+                <div class="row"><span>UserId:</span></div>
+                <div class="row"><h3 style="margin-top:0; margin-bottom: 0;">{{instagram_status['userid']}}</h3></div>
+            </div>
+        </div></div>
+    </div></div>
+
+
+    <div class="row">
+        <div class="col-md">
+    {% if istage == 'out'%}
+    <h1>Instagram Login</h1>
+
+    <form action="{{ url_for('admin.insta_setting') }}" method="post">
+        {% with messages = get_flashed_messages(True) %}
+            {% if messages %}
+                <ul class="flashes">
+                    {% for message in messages %}
+                        <li><mark class="{{ message[0] }}">{{ message[1] }}</mark></li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+        {{ forms[0].hidden_tag() }}
+        {{ forms[0].username.label }}
+        {{ forms[0].username() }}<br>
+        {{ forms[0].password.label }}
+        {{ forms[0].password() }}<br><br>
+        {{ forms[0].submit() }} <a href="{{ url_for('admin.del_insta')}}" class="button">Delete Browser</a>
+    </form>
+    {% endif %}
+
+    {% if istage == 'verify'%}
+    <h1>Instagram Verify</h1>
+
+    <form action="{{ url_for('admin.insta_setting') }}" method="post">
+        {% with messages = get_flashed_messages(True) %}
+            {% if messages %}
+                <ul class="flashes">
+                    {% for message in messages %}
+                        <li><mark class="{{ message[0] }}">{{ message[1] }}</mark></li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+        {{ forms[1].hidden_tag() }}
+        {{ forms[1].verification_code.label }}
+        {{ forms[1].verification_code() }}<br><br>
+        {{ forms[1].submit() }} <a href="{{ url_for('admin.del_insta')}}" class="button">Delete Browser</a>
+    </form>
+    {% endif %}
+
+    {% if istage == 'in'%}
+    <h1>Instagram Logout</h1>
+
+    <form action="{{ url_for('admin.insta_setting') }}" method="post">
+        {% with messages = get_flashed_messages(True) %}
+            {% if messages %}
+                <ul class="flashes">
+                    {% for message in messages %}
+                        <li><mark class="{{ message[0] }}">{{ message[1] }}</mark></li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+        {{ forms[2].hidden_tag() }}
+        {{ forms[2].submit() }} <a href="{{ url_for('admin.del_insta')}}" class="button">Delete Browser</a>
+    </form>
+    {% endif %}
+
+    {% if istage == 'error'%}
+    <h1>Error</h1>
+    {% endif %}
+    </div>
+    <div class="col">
+        <figure><img src="{{ screen }}" alt="" style="width: 400px;object-fit: none;height: 600px;object-position: top;"></figure>
+    </div>
+    </div>
+{% endblock %}
+{% block javascript %}{% endblock %}
